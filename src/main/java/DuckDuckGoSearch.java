@@ -22,8 +22,8 @@ class DuckDuckGoSearch {
                 Element title = result.getElementsByClass("links_main").first().getElementsByTag("a").first();
                 System.out.println("\nURL:" + title.attr("href"));
                 System.out.println("Title:" + title.text());
-                System.out.println("Snippet:" + result.getElementsByClass("result__snippet").first().text());
-            }
+
+                          }
         } catch (IOException e) {
             e.printStackTrace();
         }
