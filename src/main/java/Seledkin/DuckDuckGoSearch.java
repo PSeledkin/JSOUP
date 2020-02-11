@@ -1,6 +1,7 @@
 package Seledkin;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,8 +19,8 @@ class DuckDuckGoSearch {
     private final static String DUCKDUCKGO_SEARCH_URL = "https://duckduckgo.com/html/?q=";
 
     private static String getSearchResults(String query) {
-        Document doc = null;
-        HashMap<String, String> res = new HashMap<String, String>();
+        Document doc ;
+        HashMap<String, String> res = new HashMap<>();
         for (int i = 0; i < 2; i++) {
             try {
                 if (i == 0) {
@@ -43,14 +44,12 @@ class DuckDuckGoSearch {
                 e.printStackTrace();
             }
         }
-        Gson gson = new Gson();
-        String jsonString = gson.toJson(res);
-        return jsonString;
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(res);
 
     }
 
-    public static void createFile(String query) {
-        String jsonString = getSearchResults(query);
+    private static void createFile(String jsonString) {
         LocalDateTime time = LocalDateTime.now();
         DateTimeFormatter formattedTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss-SSS");
         File dir = new File("logs");
@@ -70,8 +69,8 @@ class DuckDuckGoSearch {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         String query = args[ 0 ];
-        createFile(query);
+        createFile(getSearchResults(query));
     }
 }
